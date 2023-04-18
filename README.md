@@ -3,7 +3,9 @@
 ## commands prefix: emp
 - all: show all employees
 - add: add an employee
-- show [id]: show employee by id
+- id [id]: show employee by id
+- name [name]: show employee by name
+- email [email]: show employee by email
 - del [id]: delete an employee by id
 - reset: delete everything
 - h: show this message

@@ -32,7 +32,7 @@ if (validCommands.includes(command) || !isNaN(command)) {
         add: () => {
             new Employee();
         },
-        show: () => {
+        id: () => {
             if (args.length > 0 && isValidID(args[0])) {
                 try {
                     const employee = getEmployeeFromFile(`${args[0]}.txt`);
@@ -41,7 +41,61 @@ if (validCommands.includes(command) || !isNaN(command)) {
                     console.log("employee not found");
                 }
             } else {
-                console.log("invalid id");
+                console.log("invalid id | emp id [id]");
+                printHelp();
+            }
+        },
+        name: () => {
+            if (args.length > 0) {
+                try {
+                    const files = getFiles();
+                    const employees = files.map(fileName => {
+                        return getEmployeeFromFile(fileName);
+                    });
+
+                    if (employees.length > 0) {
+                        const matches = employees.filter(employee => {
+                            return employee.name === args[0]
+                        });
+
+                        if (matches.length > 0) {
+                            console.log(matches.map(employee => employee.toString()).join("\n"));
+                        } else {
+                            console.log("no employees found");
+                        }
+                    }
+                } catch (err) {
+                    console.log("employee not found");
+                }
+            } else {
+                console.log("invalid name | emp name [name]");
+                printHelp();
+            }
+        },
+        email: () => {
+            if (args.length > 0) {
+                try {
+                    const files = getFiles();
+                    const employees = files.map(fileName => {
+                        return getEmployeeFromFile(fileName);
+                    });
+
+                    if (employees.length > 0) {
+                        const matches = employees.filter(employee => {
+                            return employee.email === args[0]
+                        });
+
+                        if (matches.length > 0) {
+                            console.log(matches.map(employee => employee.toString()).join("\n"));
+                        } else {
+                            console.log("no employees found");
+                        }
+                    }
+                } catch (err) {
+                    console.log("employee not found");
+                }
+            } else {
+                console.log("invalid email | emp email [email]");
                 printHelp();
             }
         },
@@ -55,7 +109,7 @@ if (validCommands.includes(command) || !isNaN(command)) {
                     console.log("employee not found");
                 }
             } else {
-                console.log("invalid id");
+                console.log("invalid id | emp del [id]");
                 printHelp();
             }
         },
