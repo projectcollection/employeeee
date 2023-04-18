@@ -9,7 +9,7 @@ const validCommands = Object.keys(config.validCommands);
 
 const [command, ...args] = process.argv.slice(2);
 
-if (!command || command === 'h') {
+if (!command) {
     printHelp();
 }
 
