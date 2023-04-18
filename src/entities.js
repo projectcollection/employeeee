@@ -13,7 +13,6 @@ export class Employee {
         contact = "string",
         email = "string"
     } = {}) {
-        //todo: get lastId here and increment
         this.#id = id ? id : ids.next().value;
         this.name = name;
         this.age = age;
