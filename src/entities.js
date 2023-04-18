@@ -5,6 +5,27 @@ import { ids } from './utils.js';
 
 export class Employee {
     #id;
+    #validationMap = {
+        age: (input) => {
+            if (!(parseInt(input) >= 18)) {
+                throw new Error(`too young.`);
+            }
+            return input;
+        },
+        contact: (input) => {
+            if (input.split("-").some(num => isNaN(num))) {
+                throw new Error(`should be [int]-[int]-[int]`);
+            }
+            return input;
+        },
+        email: (input) => {
+            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            if (!emailRegex.test(input)) {
+                throw new Error(`should be valid email.`);
+            }
+            return input;
+        }
+    };
 
     constructor({
         id,
@@ -33,6 +54,10 @@ export class Employee {
 
     get id() {
         return this.#id;
+    }
+
+    get validationMap() {
+        return this.#validationMap;
     }
 
     async #populate() {
