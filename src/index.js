@@ -4,17 +4,10 @@ import { Employee } from './entities.js';
 import { getFile, getFiles, deleteFile, reset } from './storage.js';
 import config from './config.js';
 
-
 const validCommands = Object.keys(config.validCommands);
-
 const [command, ...args] = process.argv.slice(2);
 
-if (!command) {
-    printHelp();
-}
-
-if (validCommands.includes(command) || !isNaN(command)) {
-
+if (validCommands.includes(command)) {
     const executionMap = {
         all: () => {
             const files = getFiles();
@@ -126,6 +119,8 @@ if (validCommands.includes(command) || !isNaN(command)) {
     }
 
     executionMap[command]();
+} else {
+    printHelp();
 }
 
 function getEmployeeFromFile(fileName) {
