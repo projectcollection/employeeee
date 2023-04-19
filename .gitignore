@@ -1,1 +1,3 @@
 employees/*
+node_modules/*
+build/
