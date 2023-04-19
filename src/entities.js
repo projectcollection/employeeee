@@ -44,7 +44,7 @@ export class Employee {
             this.#populate().then(() => {
                 writeFile(`${this.id}`, [
                     this.id,
-                    Object.keys(this).map(key => this[key])
+                    this.keys.map(key => this[key])
                 ].join(","));
 
                 console.log(this.toString());
@@ -56,8 +56,12 @@ export class Employee {
         return this.#id;
     }
 
+    get keys() {
+        return Object.keys(this)
+    }
+
     get data() {
-        return [this.#id.toString(), ...Object.keys(this).map(key => {
+        return [this.#id.toString(), ...this.keys.map(key => {
             return this[key];
         })]
     }
@@ -67,7 +71,7 @@ export class Employee {
     }
 
     async #populate() {
-        const keys = Object.keys(this);
+        const keys = this.keys;
         const inputData = await dataEntry(this);
 
         keys.forEach(key => {
@@ -76,11 +80,11 @@ export class Employee {
     }
 
     toString(widths) {
-        widths = widths ? widths : new Array(Object.keys(this).length + 1).fill(0);
+        widths = widths ? widths : new Array(this.keys.length + 1).fill(0);
 
         return [
             `id: ${this.id.toString().padEnd(widths[0], " ")}`,
-            ...Object.keys(this).map((key, idx) => {
+            ...this.keys.map((key, idx) => {
                 return `${key}: ${this[key].toString().padEnd(widths[1 + idx], " ")}`;
             })
         ].join(", ");
