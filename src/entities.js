@@ -56,6 +56,12 @@ export class Employee {
         return this.#id;
     }
 
+    get data() {
+        return [this.#id.toString(), ...Object.keys(this).map(key => {
+            return this[key];
+        })]
+    }
+
     get validationMap() {
         return this.#validationMap;
     }
@@ -69,11 +75,13 @@ export class Employee {
         })
     }
 
-    toString() {
+    toString(widths) {
+        widths = widths ? widths : new Array(Object.keys(this).length + 1).fill(0);
+
         return [
-            `id: ${this.id}`,
-            ...Object.keys(this).map(key => {
-                return `${key}: ${this[key]}`;
+            `id: ${this.id.toString().padEnd(widths[0], " ")}`,
+            ...Object.keys(this).map((key, idx) => {
+                return `${key}: ${this[key].toString().padEnd(widths[1 + idx], " ")}`;
             })
         ].join(", ");
     }

@@ -2,6 +2,7 @@
 
 import { Employee } from './entities.js';
 import { getFile, getFiles, deleteFile, reset } from './storage.js';
+import { getColumnWidths } from './utils.js';
 import config from './config.js';
 
 const validCommands = Object.keys(config.validCommands);
@@ -16,7 +17,9 @@ if (validCommands.includes(command)) {
             });
 
             if (employees.length > 0) {
-                console.log(employees.map(employee => employee.toString()).join("\n"));
+                const colWidths = getColumnWidths(employees.map(emp => emp.data));
+
+                console.log(employees.map(employee => employee.toString(colWidths)).join("\n"));
             } else {
                 console.log("no employees found");
                 printHelp();
@@ -52,7 +55,8 @@ if (validCommands.includes(command)) {
                         });
 
                         if (matches.length > 0) {
-                            console.log(matches.map(employee => employee.toString()).join("\n"));
+                            const colWidths = getColumnWidths(matches.map(emp => emp.data));
+                            console.log(matches.map(employee => employee.toString(colWidths)).join("\n"));
                         } else {
                             console.log("no employees found");
                         }
@@ -79,7 +83,8 @@ if (validCommands.includes(command)) {
                         });
 
                         if (matches.length > 0) {
-                            console.log(matches.map(employee => employee.toString()).join("\n"));
+                            const colWidths = getColumnWidths(matches.map(emp => emp.data));
+                            console.log(matches.map(employee => employee.toString(colWidths)).join("\n"));
                         } else {
                             console.log("no employees found");
                         }
