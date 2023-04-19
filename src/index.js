@@ -43,27 +43,7 @@ if (validCommands.includes(command)) {
         },
         name: () => {
             if (args.length > 0) {
-                try {
-                    const files = getFiles();
-                    const employees = files.map(fileName => {
-                        return getEmployeeFromFile(fileName);
-                    });
-
-                    if (employees.length > 0) {
-                        const matches = employees.filter(employee => {
-                            return employee.name === args[0]
-                        });
-
-                        if (matches.length > 0) {
-                            const colWidths = getColumnWidths(matches.map(emp => emp.data));
-                            console.log(matches.map(employee => employee.toString(colWidths)).join("\n"));
-                        } else {
-                            console.log("no employees found");
-                        }
-                    }
-                } catch (err) {
-                    console.log("employee not found");
-                }
+                viewEmployeesBy("name");
             } else {
                 console.log("invalid name | emp name [name]");
                 printHelp();
@@ -71,27 +51,7 @@ if (validCommands.includes(command)) {
         },
         email: () => {
             if (args.length > 0) {
-                try {
-                    const files = getFiles();
-                    const employees = files.map(fileName => {
-                        return getEmployeeFromFile(fileName);
-                    });
-
-                    if (employees.length > 0) {
-                        const matches = employees.filter(employee => {
-                            return employee.email === args[0]
-                        });
-
-                        if (matches.length > 0) {
-                            const colWidths = getColumnWidths(matches.map(emp => emp.data));
-                            console.log(matches.map(employee => employee.toString(colWidths)).join("\n"));
-                        } else {
-                            console.log("no employees found");
-                        }
-                    }
-                } catch (err) {
-                    console.log("employee not found");
-                }
+                viewEmployeesBy("email");
             } else {
                 console.log("invalid email | emp email [email]");
                 printHelp();
@@ -133,6 +93,30 @@ function getEmployeeFromFile(fileName) {
     return new Employee({
         id, name, age, contact, email
     });
+}
+
+function viewEmployeesBy(key) {
+    try {
+        const files = getFiles();
+        const employees = files.map(fileName => {
+            return getEmployeeFromFile(fileName);
+        });
+
+        if (employees.length > 0) {
+            const matches = employees.filter(employee => {
+                return employee[key] === args[0]
+            });
+
+            if (matches.length > 0) {
+                const colWidths = getColumnWidths(matches.map(emp => emp.data));
+                console.log(matches.map(employee => employee.toString(colWidths)).join("\n"));
+            } else {
+                console.log("no employees found");
+            }
+        }
+    } catch (err) {
+        console.log("employee not found");
+    }
 }
 
 function isValidID(input) {
