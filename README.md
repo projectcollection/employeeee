@@ -10,11 +10,28 @@
 - reset: delete everything
 - h: show this message
 
-## usage
+## setup
 
-install globally
+install `tsc` globally
+```
+npm i -g typescript
+```
+
+install dependencies
 ```
 //from project root
+npm i
+```
+
+build
+```
+tsc
+```
+
+## usage
+
+install cli globally
+```
 npm i -g
 ```
 
