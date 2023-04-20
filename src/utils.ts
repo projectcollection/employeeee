@@ -1,5 +1,5 @@
 
-import { getFiles } from './storage.js';
+import { getFiles } from './storage';
 
 function* IDGenerator() {
     const files = getFiles();

@@ -1,7 +1,7 @@
 
-import { dataEntry } from './input.js';
-import { writeFile } from './storage.js';
-import { ids } from './utils.js';
+import { dataEntry } from './input';
+import { writeFile } from './storage';
+import { ids } from './utils';
 
 export class Employee {
     #id: number;
