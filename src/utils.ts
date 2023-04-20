@@ -15,12 +15,8 @@ function* IDGenerator() {
 
 export const ids = IDGenerator();
 
-export function getColumnWidths(table) {
-    if (!table || !table[0] || table[0].length < 1) {
-        throw new Error("empty table");
-    }
-
-    let columnWidths = new Array(table[0].length).fill(0);
+export function getColumnWidths(table: string[][]) {
+    let columnWidths: number[] = new Array(table[0].length).fill(0);
 
     table.forEach((row) => {
         row.forEach((col, idx) => {

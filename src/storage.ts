@@ -22,22 +22,22 @@ export function getFiles() {
     } catch (err) {
         if (!existsSync(employeesPath)) {
             mkdirSync(employeesPath);
-            return [];
         }
+        return [];
     }
 }
 
-export function getFile(filename) {
+export function getFile(filename: string) {
     return readFileSync(employeesPath + '/' + filename, {
         encoding: 'utf8'
     });
 }
 
-export function writeFile(filename, content) {
+export function writeFile(filename: string, content: string) {
     return writeFileSync(employeesPath + '/' + filename + '.txt', content);
 }
 
-export function deleteFile(filename) {
+export function deleteFile(filename: string) {
     return rmSync(employeesPath + '/' + filename + '.txt');
 }
 

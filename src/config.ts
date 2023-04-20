@@ -1,3 +1,7 @@
+
+type Config = {
+    validCommands: Record<string, [(string)[], string]>
+}
 export default {
     validCommands: {
         all: [[], 'show all employees'],
@@ -9,4 +13,4 @@ export default {
         reset: [[], 'delete everything'],
         h: [[], 'show this message']
     }
-}
+} as Config;

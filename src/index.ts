@@ -83,19 +83,19 @@ if (validCommands.includes(command)) {
         throw new Error("validCommands and implementation doesn't match");
     }
 
-    executionMap[command]();
+    executionMap[command as keyof typeof executionMap]();
 } else {
     printHelp();
 }
 
-function getEmployeeFromFile(fileName) {
+function getEmployeeFromFile(fileName: string) {
     const [id, name, age, contact, email] = getFile(fileName).split(",");
     return new Employee({
-        id, name, age, contact, email
+        id: parseInt(id), name, age, contact, email
     });
 }
 
-function viewEmployeesBy(key) {
+function viewEmployeesBy(key: "id" | "name" | "email") {
     try {
         const files = getFiles();
         const employees = files.map(fileName => {
@@ -119,8 +119,8 @@ function viewEmployeesBy(key) {
     }
 }
 
-function isValidID(input) {
-    return !isNaN(input[0]) &&
+function isValidID(input: string) {
+    return !Number.isNaN(input[0]) &&
         parseInt(input[0]) >= 0;
 }
 
