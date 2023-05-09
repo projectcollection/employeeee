@@ -74,6 +74,7 @@ export const executionMap = {
             } catch (err) {
                 console.log(err)
                 console.log("employee not found");
+                throw new Error("del: employee not found");
             }
         } else {
             console.log("invalid id | emp del [id]");
@@ -122,7 +123,7 @@ function viewEmployeesBy(key: "id" | "name" | "email", val: string | undefined =
                 const colWidths = getColumnWidths(matches.map(emp => emp.data));
                 const result = matches.map(employee => employee.toString(colWidths)).join("\n");
 
-                if (queryVal) {
+                if (val) {
                     return result;
                 }
                 console.log(result);
