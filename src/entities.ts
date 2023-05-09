@@ -37,21 +37,30 @@ export class Employee {
         name = "string",
         age = "int",
         contact = "string",
-        email = "string"
+        email = "string",
+        preFilled = false
     }: {
         id?: number,
         name?: string,
         age?: string | number,
         contact?: string,
-        email?: string
+        email?: string,
+        preFilled?: boolean
     } = {}) {
-        this.#id = id ? id : ids.next().value as number;
+        this.#id = id != undefined ? id : ids.next().value as number;
         this.name = name;
         this.age = age as number;
         this.contact = contact;
         this.email = email;
 
-        if (id === undefined) {
+        if (preFilled) {
+            writeFile(`${this.id}`, [
+                this.id,
+                this.keys.map(key => this[key])
+            ].join(","));
+
+            console.log(this.toString());
+        } else if (id === undefined) {
             this.#populate().then(() => {
                 writeFile(`${this.id}`, [
                     this.id,
