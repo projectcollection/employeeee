@@ -1,9 +1,9 @@
 #! /usr/bin/env node
 
-import { Employee } from './entities';
-import { getFile, getFiles, deleteFile, reset } from './storage';
-import { getColumnWidths } from './utils';
-import config from './config';
+import { Employee } from './entities.js';
+import { getFile, getFiles, deleteFile, reset } from './storage.js';
+import { getColumnWidths } from './utils.js';
+import config from './config.js';
 
 const validCommands = Object.keys(config.validCommands);
 const [command, ...args] = process.argv.slice(2);
