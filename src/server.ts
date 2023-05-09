@@ -17,14 +17,7 @@ const server = http.createServer((req, res) => {
 
                     if (allEmployees) {
                         const jsonEmployees = allEmployees.split('\n').map((entry) => {
-                            let json: Record<string, string> = {};
-
-                            entry.split(',').forEach((prop) => {
-                                const [key, val] = prop.split(':');
-                                json[key.trim()] = val.trim();
-                            });
-
-                            return json;
+                            return strToJSON(entry);
                         });
 
                         res.setHeader('content-type', 'application/json');
@@ -40,17 +33,9 @@ const server = http.createServer((req, res) => {
                             const employee = executionMap['id'](val);
 
                             if (employee) {
-
-                                let json: Record<string, string> = {};
-
-                                employee.toString().split(',').forEach((prop) => {
-                                    const [key, val] = prop.split(':');
-                                    json[key.trim()] = val.trim();
-                                });
-
                                 res.setHeader('content-type', 'application/json');
                                 res.statusCode = 200;
-                                res.end(JSON.stringify(json));
+                                res.end(JSON.stringify(strToJSON(employee.toString())));
                             }
                         } catch (err) {
                             res.statusCode = 404;
@@ -62,14 +47,7 @@ const server = http.createServer((req, res) => {
 
                             if (matches) {
                                 const jsonEmployees = matches.split('\n').map((entry) => {
-                                    let json: Record<string, string> = {};
-
-                                    entry.split(',').forEach((prop) => {
-                                        const [key, val] = prop.split(':');
-                                        json[key.trim()] = val.trim();
-                                    });
-
-                                    return json;
+                                    return strToJSON(entry);
                                 }).filter((entry) => {
                                     return entry.name === val;
                                 });
@@ -88,14 +66,7 @@ const server = http.createServer((req, res) => {
 
                             if (matches) {
                                 const jsonEmployees = matches.split('\n').map((entry) => {
-                                    let json: Record<string, string> = {};
-
-                                    entry.split(',').forEach((prop) => {
-                                        const [key, val] = prop.split(':');
-                                        json[key.trim()] = val.trim();
-                                    });
-
-                                    return json;
+                                    return strToJSON(entry);
                                 })
 
                                 res.setHeader('content-type', 'application/json');
@@ -122,7 +93,7 @@ const server = http.createServer((req, res) => {
 
                     res.setHeader('content-type', 'application/json');
                     res.statusCode = 200;
-                    res.end(newEmployee.toString());
+                    res.end(JSON.stringify(strToJSON(newEmployee.toString())));
                 })
             } else if (req.method == 'DELETE') {
                 let chunks: Uint8Array[] = [];
@@ -152,6 +123,17 @@ const server = http.createServer((req, res) => {
         }
     }
 });
+
+function strToJSON(str: string) {
+    let json: Record<string, string> = {};
+
+    str.split(',').forEach((prop) => {
+        const [key, val] = prop.split(':');
+        json[key.trim()] = val.trim();
+    });
+
+    return json;
+}
 
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
