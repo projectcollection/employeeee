@@ -3,12 +3,23 @@ import { getFiles } from './storage.js';
 
 function* IDGenerator() {
     const files = getFiles();
+    files.sort((a, b) => {
+        const intA = parseInt(a.split('.')[0]);;
+        const intB = parseInt(b.split('.')[0]);
+        if (intA === intB) {
+            return 0;
+        }
+        if (intA > intB) {
+            return 1;
+        }
+        return -1;
+    })
 
     const lastFile = files[files.length - 1];
 
     let id = lastFile ? parseInt(lastFile.split(".")[0]) + 1 : 0;
 
-    while (true){
+    while (true) {
         yield id++;
     }
 }
