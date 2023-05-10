@@ -46,7 +46,6 @@ const router = express.Router();
 let tempProducts: Product[] = [];
 
 router.get('/', (req, res) => {
-    console.log('went through');
     res.setHeader('content-type', 'application/json');
     res.statusCode = 200;
     res.end(JSON.stringify({ message: "success", products: tempProducts }));
