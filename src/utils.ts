@@ -39,3 +39,14 @@ export function getColumnWidths(table: string[][]) {
 
     return columnWidths;
 }
+
+export function printStrToJSON(str: string) {
+    let json: Record<string, string> = {};
+
+    str.split(',').forEach((prop) => {
+        const [key, val] = prop.split(':');
+        json[key.trim()] = val.trim();
+    });
+
+    return json;
+}
