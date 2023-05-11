@@ -11,7 +11,8 @@ const { CRYPT_SECRET } = env;
 export const UserSchema = z.object({
     username: z.string(),
     email: z.string(),
-    password: z.string()
+    password: z.string(),
+    roles: z.enum(['user', 'admin']).optional()
 });
 
 export type UserType = z.infer<typeof UserSchema>;
@@ -20,6 +21,11 @@ export const UserMngSchema = new Schema({
     username: String,
     email: String,
     password: String,
+    roles: {
+        type: [String],
+        enum: ['user', 'admin'],
+        default: 'user'
+    }
 });
 
 export const UserModel = model('User', UserMngSchema);
