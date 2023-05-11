@@ -4,6 +4,7 @@ import cors, { CorsOptionsDelegate } from 'cors';
 
 import employeesRouter from './routes/employees.js';
 import productsRouter from './routes/products.js';
+import authRouter from './routes/auth.js';
 
 const port = 3000;
 
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 
 app.use('/employees', employeesRouter);
 app.use('/products', productsRouter);
+app.use('/auth', authRouter);
 
 app.listen(port, () => {
     console.log(`Server running at port: ${port}`);
