@@ -1,21 +1,12 @@
 import express from 'express';
 import z from 'zod';
-import { model, Schema, connect } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { EncryptJWT, base64url } from 'jose';
 
 import env from '../envConfig.js';
-const { MONGO_URI, CRYPT_SECRET } = env;
 
-try {
-    if (MONGO_URI) {
-        connect(MONGO_URI);
-    } else {
-        throw new Error('MONGO_URI undefined');
-    }
-} catch (error) {
-    console.log(error);
-}
+const { CRYPT_SECRET } = env;
 
 export const UserSchema = z.object({
     username: z.string(),
@@ -55,18 +46,13 @@ router.post('/', async (req, res) => {
             let newUser = new UserModel(newUserData);
             let jwt;
 
-            if (CRYPT_SECRET) {
-                const secret = base64url.decode(CRYPT_SECRET);
-                jwt = await new EncryptJWT({
-                    username,
-                    email
-                }).setExpirationTime('2h')
-                    .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
-                    .encrypt(secret);
-
-            } else {
-                throw new Error(`secret undefined`);
-            }
+            const secret = base64url.decode(CRYPT_SECRET);
+            jwt = await new EncryptJWT({
+                username,
+                email
+            }).setExpirationTime('2h')
+                .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+                .encrypt(secret);
 
             newUser.save();
 

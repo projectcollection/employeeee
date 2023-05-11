@@ -1,9 +1,10 @@
 import dotenv from 'dotenv';
+import z from 'zod';
 dotenv.config();
 
-const { MONGO_URI, CRYPT_SECRET } = process.env;
+const ENVSchema = z.object({
+    MONGO_URI: z.string(),
+    CRYPT_SECRET: z.string()
+});
 
-export default {
-    MONGO_URI,
-    CRYPT_SECRET
-};
+export default ENVSchema.parse(process.env);
